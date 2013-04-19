@@ -1,0 +1,18 @@
+{
+  "name": "tower-session",
+  "repo": "tower/client-session",
+  "description": "Tower Session",
+  "version": "0.0.1",
+  "keywords": [],
+  "local": [
+    "tower"
+  ],
+  "paths": [
+    "./../"
+  ],
+  "main": "./index.js",
+  "scripts": [
+    "index.js"
+  ],
+  "license": "MIT"
+}
