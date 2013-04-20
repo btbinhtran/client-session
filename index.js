@@ -1,11 +1,19 @@
 
 /**
+ * Module Dependencies
+ */
+
+var adapter = require('./lib/adapter');
+    require('./lib/adapters/session');
+    require('./lib/adapters/local');
+
+/**
  * Module Export
  *
  * @type {[type]}
  */
 
-module.exports = session;
+var exports = module.exports = session;
 
 /**
  * Session container object/method.
@@ -15,25 +23,35 @@ module.exports = session;
  * @return {Function}
  */
 
-function session(key, value) {
+function session (key, value) {
 
-  if (!value) {
-    return session.keys[key];
+  if (arguments.length === 2) {
+    return exports.adapter.set(key,value);
+  } else {
+    return exports.adapter.get(key);
   }
 
-  session.keys[key] = value;
-
-  return session;
 }
 
+exports.adapter = null;
+
+exports.adapters = [
+    'session'
+  , 'local'
+];
+
+session.init = function() {
+
+  for (var i = 0, n = exports.adapters.length; i < n; i++) {
+    if (adapter(exports.adapters[i]).supported) {
+      return exports.adapter = adapter(exports.adapters[i]);
+    }
+  }
+
+};
+
 /**
- * Temp in-memory sessions.
- *
- * @todo Backup the data using adapters for the various
- *       local storage implementations. The front facing
- *       interface will be in-memory (for speed).
- *
- * @type {Object}
+ * Initialize the session engine.
  */
 
-session.keys = {};
+session.init();

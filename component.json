@@ -13,6 +13,9 @@
   "main": "./index.js",
   "scripts": [
     "index.js"
+    , "lib/adapter.js"
+    , "lib/adapters/local.js"
+    , "lib/adapters/session.js"
   ],
   "license": "MIT"
 }
